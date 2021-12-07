@@ -1,5 +1,4 @@
 rm(list=ls())
-setwd('d:/dropbox/working/eocene/eocene-productivity-public/')
 source('code/process_data.r')
 source('code/trophic_function.r')
 source('code/parameters.r')
@@ -40,16 +39,14 @@ fin <- 46
 del <- 0.5   
 accumss=accumssd=temps2=temps2sd <- c()
 
-i <- 1
 while(int>fin){
-	tmp <- size[size$age < int & size$age >= int - del,]
-	accumss <- c(accumss,mean(tmp$accum))
+	tmp      <- size[size$age < int & size$age >= int - del,]
+	accumss  <- c(accumss,mean(tmp$accum))
 	accumssd <- c(accumssd,sd(tmp$accum))
 	tmp_temp <- temp[temp$age <int & temp$age >= int -del,]
-	temps2 <- c(temps2,mean(tmp_temp$temp))
+	temps2   <- c(temps2,mean(tmp_temp$temp))
 	temps2sd <- c(temps2sd,sd(tmp_temp$temp))
 	int <- int - del
-	i <- i + 1
 }
 accumssd[accumssd==0] <- sort(unique(accumssd))[2]
 
@@ -77,8 +74,6 @@ pred <- predict.gam(mod,newdata=list(temps2=xin),se.fit=TRUE)
 ####################################################################################################
 ####################################################################################################
 xout <- seq(size_min,size_max,0.01)
-old <- 62
-new <- 46
 i2 <- (b*is+loga)[b*is+loga >size_min & b*is+loga <= size_max]
 
 ages   <- unique(size$age) 
@@ -168,8 +163,7 @@ ylims <- c(0,2.5)
 xlims <- c(-10,-5)
 
 int <- 62; fin <- 46; del <- 1
-i <- 1
-j <- 0
+i   <- 1
 
 par(mfrow=c(4,4),mar=c(0,0,0,0),oma=c(5,9,5,5),cex.axis=0.9,xpd=TRUE)
 while(int>fin){
